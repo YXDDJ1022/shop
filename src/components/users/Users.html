@@ -1,0 +1,55 @@
+<div>
+  <!-- 面包屑 -->
+  <el-breadcrumb separator-class="el-icon-arrow-right" class="bread">
+    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+    <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+    <el-breadcrumb-item>用户列表</el-breadcrumb-item>
+  </el-breadcrumb>
+
+  <el-row :gutter="26">
+    <!-- 搜索框 -->
+    <el-col :span="8">
+      <el-input placeholder="请输入内容" v-model="searchText" class="input-with-select">
+        <el-button slot="append" icon="el-icon-search" @click="query"></el-button>
+      </el-input>
+    </el-col>
+    <!-- 添加用户 -->
+    <el-col :span="8">
+      <el-button @click="showAddUserDialog">添加用户</el-button>
+    </el-col>
+  </el-row>
+
+  <!-- 数据 -->
+  <el-table :data="usersData" style="width: 100%">
+    <el-table-column prop="username" label="姓名" width="180"></el-table-column>
+    <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
+    <el-table-column prop="mobile" label="电话"></el-table-column>
+    <el-table-column prop="address" label="状态"></el-table-column>
+    <el-table-column prop="address" label="操作"></el-table-column>
+  </el-table>
+
+  <!-- 分页 -->
+  <el-pagination background layout="prev, pager, next" :total="total" :page-size="3" :current-page="currPage" @current-change="changeCurPage"></el-pagination>
+
+  <!-- 对话框：添加用户 -->
+  <el-dialog title="添加用户" :visible.sync="dialogAddUserVisible">
+    <el-form :rules="rules" :model="addUserForm" label-width="80px">
+      <el-form-item label="用户名" prop="username">
+        <el-input v-model="addUserForm.username"></el-input>
+      </el-form-item>
+      <el-form-item label="密码" prop="password">
+        <el-input type="password" v-model="addUserForm.password"></el-input>
+      </el-form-item>
+      <el-form-item label="邮箱" prop="email">
+        <el-input v-model="addUserForm.email"></el-input>
+      </el-form-item>
+      <el-form-item label="手机" prop="mobile">
+        <el-input v-model="addUserForm.mobile"></el-input>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="dialogAddUserVisible = false">取 消</el-button>
+      <el-button type="primary" @click="addUser">确 定</el-button>
+    </div>
+  </el-dialog>
+</div>
